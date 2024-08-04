@@ -9,8 +9,8 @@ import { Toaster } from 'react-hot-toast';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Guardian',
-  description: 'Your nasty guardian of your secrets',
+  title: 'Consumable',
+  description: 'Consumable consumable CONSUMABLE',
 };
 
 export default function RootLayout({

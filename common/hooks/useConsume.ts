@@ -1,36 +1,64 @@
 import { ChangeEvent, useState } from 'react';
 import { toast as toastFn } from 'react-hot-toast';
+
 import { toast } from '@/common/helpers/toast';
-import { consume } from '@/app/actions';
+import { deleteCookies } from '@/app/actions';
+
+import { Consumable } from 'consumable-sdk/dist/src/Consumable';
+import useTransaction from './useTransaction';
 
 const useConsume = (paramSecret: string | undefined) => {
   const [secret, setSecret] = useState<string>(paramSecret ? paramSecret : '');
   const [address, setAddress] = useState<string>('');
   const [isConsuming, setIsConsuming] = useState<boolean>(false);
 
+  const { sendTransaction, transactionHash } = useTransaction();
+
   const onSend = async () => {
     if (!secret || !address) return;
 
     setIsConsuming(true);
-    const toastId = toastFn.loading('Snitching on you...');
+    const toastId = toastFn.loading('Consuming your secret...');
 
     try {
-      await consume(secret);
+      const consumable = new Consumable(secret);
+
+      const {
+        contractAddress,
+        chainId,
+        methodName,
+        methodArgs,
+        merkleProof,
+        privateKey,
+      } = consumable.consume();
+
+      const receipt = await sendTransaction({
+        chainId: +chainId,
+        contractAddress,
+        receiverAddress: address,
+        privateKey,
+        methodName,
+        merkleProof,
+      });
 
       toast({
         toastId: toastId,
-        message: 'Succesfull snitching!',
+        message: 'Secret succesfully consumed!',
         success: true,
       });
     } catch (error: any) {
+      console.log(error);
+
       const errorMessage =
-        error?.message || 'Something went wrong while snitching on you';
+        error?.message || 'Something went wrong while consuming your secret';
 
       toast({ toastId: toastId, message: errorMessage, success: false });
     } finally {
       setSecret('');
       setAddress('');
       setIsConsuming(false);
+
+      deleteCookies();
     }
   };
 

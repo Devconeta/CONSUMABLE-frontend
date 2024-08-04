@@ -34,7 +34,6 @@ const Consume = (props: ConsumeProps) => {
           <label htmlFor="secret-input">Enter your secret</label>
           <input
             id="secret-input"
-            defaultValue={secret}
             value={secret}
             onChange={onChangeSecret}
             placeholder="Would you mind to tell me... your secret?"
@@ -46,7 +45,6 @@ const Consume = (props: ConsumeProps) => {
           <label htmlFor="address-input">Enter your address</label>
           <input
             id="address-input"
-            defaultValue={address}
             value={address}
             onChange={onChangeAddress}
             placeholder="Free money! Tell me your address"

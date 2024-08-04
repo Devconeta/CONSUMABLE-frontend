@@ -2,10 +2,6 @@
 
 import { cookies } from 'next/headers';
 
-export async function consume(secret: string) {
-  // invocar sdk y esperar respuesta
-
+export async function deleteCookies() {
   cookies().delete('secret');
-
-  return 'a';
 }

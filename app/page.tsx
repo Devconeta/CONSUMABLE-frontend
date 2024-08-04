@@ -1,4 +1,4 @@
-import Home from './sections/Home';
+import Home from '@/components/sections/Home';
 
 export default function RootHome() {
   return <Home />;

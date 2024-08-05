@@ -4,7 +4,7 @@ import { toast as toastFn } from 'react-hot-toast';
 import { toast } from '@/common/helpers/toast';
 import { deleteCookies } from '@/app/actions';
 
-import { Consumable } from 'consumable-sdk/dist/src/Consumable';
+import { Consumable } from 'consumable-sdk';
 import useTransaction from './useTransaction';
 
 const useConsume = (paramSecret: string | undefined) => {
